@@ -17,6 +17,14 @@ public class Robot extends Lifeform{
 	}
 	
 	
+	public Robot(String modelName, String ID, int power, int weapon){
+		super(ID, power);
+		this.modelName = modelName;
+		this.setWeapon(weapon);
+		totalPower += power;
+	}
+	
+	
 	public String getModelName(){
 		return this.modelName;
 	}
@@ -31,8 +39,12 @@ public class Robot extends Lifeform{
 		return this.rw.getPower() * (this.getPower() / 100f);
 	}
 	
-	public void setWeapon(RobotWeapon rw){
-		this.rw = rw;
+	public void setWeapon(int num){
+		switch(num){
+		case 0 : this.rw = RobotWeapon.CLAWS; break;
+		case 1 : this.rw = RobotWeapon.LASER; break;
+		case 2 : this.rw = RobotWeapon.ROCKETLAUCHER; break;
+		}
 	}
 	
 	public String toWeaponString(){

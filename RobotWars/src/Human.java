@@ -19,6 +19,12 @@ public class Human extends Lifeform {
 		totalPower += power;
 	}
 	
+	public Human(String name, int power, int weapon){
+		super(name, power);
+		this.setWeapon(weapon);
+		totalPower += power;
+	}
+	
 	public float getPower(){
 		return super.getPower();
 	}
@@ -28,8 +34,12 @@ public class Human extends Lifeform {
 		return this.hw.getPower() * (this.getPower() / 100f);
 	}
 	
-	public void setWeapon(HumanWeapon hw){
-		this.hw = hw;
+	public void setWeapon(int num){
+		switch(num){
+		case 0 : this.hw = HumanWeapon.PITCHFORK; break;
+		case 1 : this.hw = HumanWeapon.MACHINEGUN; break;
+		case 2 : this.hw = HumanWeapon.BOMB; break;
+		}
 	}
 	
 	public String toWeaponString(){

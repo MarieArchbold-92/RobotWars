@@ -82,16 +82,16 @@ public class GameApp {
 		//creating robots
 				for(int i = 0; i < robots.length; ++i){
 					if(i % 2 == 0){
-						robots[i] = new Robot("Type A", "R" + (i + 1), rand.nextInt(101));
+						robots[i] = new Robot("Type A", "R" + (i + 1), rand.nextInt(101), rand.nextInt(3));
 					}else{
-						robots[i] = new Robot("Type B", "R" + (i + 1), rand.nextInt(101));
+						robots[i] = new Robot("Type B", "R" + (i + 1), rand.nextInt(101), rand.nextInt(3));
 					}
 				}
 
 
 				//creating humans
 				for(int i = 0; i < humans.length; ++i){
-					humans[i] = new Human(createName(), rand.nextInt(101));
+					humans[i] = new Human(createName(), rand.nextInt(101), rand.nextInt(3));
 				}		
 	}
 
@@ -100,6 +100,7 @@ public class GameApp {
 		int r = 0;
 		int h = 0;
 		while(inBattle){
+			System.out.println();
 //			System.out.println(humans[h].toString() + " weapon: " + humans[h].getWeaponPower()
 //					+ " defense " + humans[h].getDefense() + " life: " + humans[h].getLife());
 //			System.out.println(robots[r].toString() + " weapon: " + robots[r].getWeaponPower()
