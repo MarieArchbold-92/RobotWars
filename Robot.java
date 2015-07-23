@@ -3,7 +3,7 @@ package com.mubasher.ocja.game;
 import java.util.Random;
 
 /**
- * @author Thomas Mcsherry,Mubasher Mohammede
+ * @author Thomas Mcsherry,Mubasher Mohammed
  *
  */
 public class Robot  {
