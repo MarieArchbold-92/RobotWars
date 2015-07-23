@@ -3,12 +3,21 @@ package com.mubasher.ocja.game;
 import java.util.Random;
 
 /**
- * @author Thomas , Mubasher
+ * @author Thomas Mcsherry,Mubasher Mohammede
  *
  */
 public class Robot  {
 	private String model;
-	private int power ;
+	private double power ;
+	boolean isAlive = true;
+
+	public boolean isAlive() {
+		return isAlive;
+	}
+
+	public void setAlive(boolean isAlive) {
+		this.isAlive = isAlive;
+	}
 
 	public Robot(String model) {
 		super();
@@ -25,10 +34,10 @@ public class Robot  {
 	public void setModel(String model) {
 		this.model = model;
 	}
-	public int getPower() {
+	public double getPower() {
 		return power;
 	}
-	public void setPower(int power) {
+	public void setPower(double power) {
 		this.power = power;
 	}
 
