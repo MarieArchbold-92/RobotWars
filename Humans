@@ -43,7 +43,7 @@ public class Humans {
 		return power;
 	}
 
-	public void setHalfPower(){
+	public void setReducedPower(){
 		
 		if(this.power != 0){
 			this.power = power -0.5;
