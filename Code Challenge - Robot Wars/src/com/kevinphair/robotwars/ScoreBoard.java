@@ -7,19 +7,19 @@ package com.kevinphair.robotwars;
  */
 public class ScoreBoard {
 
-	static int numTeams = 2;
-	static int[] wins = new int[numTeams];
-	static int[] draws = new int[numTeams];
-	static int[] losses = new int[numTeams];
-	static String[] teamName = new String[numTeams];
+	int numTeams = 2;
+	int[] wins = new int[numTeams];
+	int[] draws = new int[numTeams];
+	int[] losses = new int[numTeams];
+	String[] teamName = new String[numTeams];
 
 	public ScoreBoard (int teams) {
 		this.numTeams = teams;
-		for (int i = 0; i < numTeams; ++i) {
-			wins[i] = 0;
-			draws[i] = 0;
-			losses[i] = 0;
-			teamName[i] = "";
+		for (int i = 0; i < this.numTeams; ++i) {
+			this.wins[i] = 0;
+			this.draws[i] = 0;
+			this.losses[i] = 0;
+			this.teamName[i] = "";
 		}
 	}
 
@@ -27,46 +27,28 @@ public class ScoreBoard {
 		this.teamName[team] = name;
 	}
 
-
 	public void addWin (int teamNumber){
-
-		wins[teamNumber]++;
-
+		this.wins[teamNumber]++;
 	}
-
 
 	public void addLoss(int teamNumber){
-
-		losses[teamNumber]++;
-
+		this.losses[teamNumber]++;
 	}
-
 
 	public void addDraw (int teamNumber){
-
-		draws[teamNumber]++;
-
+		this.draws[teamNumber]++;
 	}
-
 
 	public int getWins(int teamNumber) {
-
-		return wins[teamNumber];
-
+		return this.wins[teamNumber];
 	}
 
-
 	public int getLosses(int teamNumber) {
-
-		return losses[teamNumber];
-
+		return this.losses[teamNumber];
 	}
 
 	public int getDraws(int teamNumber) {
-
-		return draws[teamNumber];
-
+		return this.draws[teamNumber];
 	}
-
 
 }
