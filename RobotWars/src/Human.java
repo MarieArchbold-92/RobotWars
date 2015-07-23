@@ -2,7 +2,8 @@
 
 public class Human extends Lifeform {
 	
-	public static int totalPower = 0;
+	private HumanWeapon hw = HumanWeapon.PITCHFORK;
+	public static float totalPower = 0f;
 
 	public Human(){
 		super(("Agent Smith" + (-1)), -1);
@@ -18,8 +19,20 @@ public class Human extends Lifeform {
 		totalPower += power;
 	}
 	
-	public int getPower(){
+	public float getPower(){
 		return super.getPower();
 	}
 	
+	//gets weapon power * (robots power / 100)
+	public float getWeaponPower(){
+		return this.hw.getPower() * (this.getPower() / 100f);
+	}
+	
+	public void setWeapon(HumanWeapon hw){
+		this.hw = hw;
+	}
+	
+	public String toWeaponString(){
+		return this.getID() + " with " + this.hw.getName(); 
+	}
 }

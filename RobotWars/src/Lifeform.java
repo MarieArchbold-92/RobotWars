@@ -11,15 +11,29 @@
  *
  */
 public class Lifeform {
+	
 	protected String ID;
-	protected int power;
-	public void setPower(int power) {
+	protected float power;
+	protected float life = 100;
+	protected float armour = 40;
+	
+	
+	public float getDefense() {
+		return armour * (power / 100);
+	}
+
+
+//	public void setArmour(float armour) {
+//		this.armour = armour;
+//	}
+
+
+	public void setPower(float power) {
 		this.power = power;
 	}
 
-	protected int life = 100;
 
-	public Lifeform(String ID, int power) {
+	public Lifeform(String ID, float power) {
 		this.ID = ID;
 		this.power = power;
 	}
@@ -28,7 +42,7 @@ public class Lifeform {
 		return this.ID;
 	}
 
-	public int getPower() {
+	public float getPower() {
 		return this.power;
 	}
 	
@@ -36,11 +50,11 @@ public class Lifeform {
 		return this.getID() + "'s power is " + this.getPower();
 	}
 	
-	public int getLife(){
+	public float getLife(){
 		return this.life;
 	}
 	
-	public void setLife(int life){
+	public void setLife(float life){
 		this.life = life;
 	}
 }

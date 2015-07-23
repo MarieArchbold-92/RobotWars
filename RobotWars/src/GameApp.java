@@ -16,7 +16,14 @@ public class GameApp {
 	private Random rand = new Random();
 
 	public static void main(String[] args) {
-
+//		Robot r = new Robot("Model", "ID", 100);
+//		System.out.println(r.getWeaponPower());
+		//ENUM TEST
+//		RobotWeapon bmb = RobotWeapon.BOMB;
+//		System.out.println("Bomb's power " + bmb.getPower());
+//		bmb = RobotWeapon.CLAWS;
+//		System.out.println("claws power " + bmb.getPower());
+		
 		GameApp ga = new GameApp();
 		ga.runProgram();
 	}
@@ -28,6 +35,7 @@ public class GameApp {
 		boolean fight = true;
 		do{
 			createLifeforms();
+			//remove TODO
 			
 			System.out.println();
 			System.out.println("Creating new life for your sadistic pleasure..");
@@ -35,7 +43,8 @@ public class GameApp {
 			System.out.println("1) Last Man Standing");
 			System.out.println("2) Through life");
 			System.out.println("3) One on one battles");
-			System.out.println("4) Quit");
+			System.out.println("4) Weapon battle");
+			System.out.println("5) Quit");
 			System.out.print("Choose an option: ");
 			while(!scan.hasNextInt()){
 				scan.next();
@@ -54,9 +63,12 @@ public class GameApp {
 			case 3: 
 				oneOnOneBattle();
 				break;
-			case 4:
+			case 5:
 				fight = false;
 				System.out.println("Thanks for playing the game, bye!");
+				break;
+			case 4: 
+				weaponBattle();
 				break;
 			default: 
 				System.out.println("Invalid choice, please pick a number between 1 and 4");
@@ -83,6 +95,54 @@ public class GameApp {
 				}		
 	}
 
+	private void weaponBattle(){
+		boolean inBattle = true;
+		int r = 0;
+		int h = 0;
+		while(inBattle){
+//			System.out.println(humans[h].toString() + " weapon: " + humans[h].getWeaponPower()
+//					+ " defense " + humans[h].getDefense() + " life: " + humans[h].getLife());
+//			System.out.println(robots[r].toString() + " weapon: " + robots[r].getWeaponPower()
+//					+ " defense " + robots[r].getDefense() + " life: " + robots[r].getLife());
+			if(humans[h].getWeaponPower() > robots[r].getDefense()){
+				robots[r].setLife(robots[r].getLife() - (humans[h].getWeaponPower() - robots[r].getDefense()));
+				System.out.println(humans[h].toWeaponString() + " hits " + robots[r].toWeaponString());
+			}
+			else {
+				humans[h].setLife(humans[h].getLife() -(robots[r].getDefense() - humans[h].getWeaponPower()));
+				System.out.println(humans[h].toWeaponString() + " is hit by recoil from " + robots[r].toWeaponString());
+			}
+			
+			if(robots[r].getWeaponPower() > humans[h].getDefense()){
+				humans[h].setLife(humans[h].getLife() - (robots[r].getWeaponPower() - humans[h].getDefense()));
+				System.out.println(robots[r].toWeaponString() + " hits " + humans[h].toWeaponString());
+			}
+			else {
+				robots[r].setLife(robots[r].getLife() - (humans[h].getDefense() - robots[r].getWeaponPower()));
+				System.out.println(robots[r].toWeaponString() + " is hit by recoil from " + humans[h].toWeaponString());
+			}
+
+			if(robots[r].getLife() <= 0){
+				++r;
+			}
+			if(humans[h].getLife() <= 0){
+				++h;
+			}
+
+			if(r >= robots.length || h >= humans.length){
+				inBattle = false;
+			}
+		}
+
+		int humansLeft = 500 - (h + 1);
+		int robotsLeft = 500 - (r + 1);
+		//print who won
+		if(humansLeft > robotsLeft){
+			System.out.println("Humans win the battle. " + humansLeft + " survivors.");
+		}else{
+			System.out.println("Robots win the battle. " + robotsLeft + " survivors");
+		}
+	}
 
 	private void lifeBattle(){
 		//LIFE BATTLE
@@ -155,13 +215,13 @@ public class GameApp {
 			if(humans[h].getPower() > robots[r].getPower()){
 				sign = '>';
 				System.out.println(humans[h].toString() + " " + sign + " " + robots[r].toString());
-				humans[h].setPower(humans[h].getPower()/2);
+				humans[h].setPower(humans[h].getPower() - 0.5F);
 				++r;
 			}
 			else if (robots[r].getPower() > humans[h].getPower()){
 				sign= '<';
 				System.out.println(humans[h].toString() + " " + sign + " " + robots[r].toString());
-				robots[r].setPower(robots[r].getPower()/2);
+				robots[r].setPower(robots[r].getPower() - 0.5F);
 				++h;
 			}
 			else{
