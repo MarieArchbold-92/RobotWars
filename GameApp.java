@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * @author @author Thomas Mcsherry,Mubasher Mohammede
+ * @author @author Thomas Mcsherry,Mubasher Mohammed
  *
  */
 public class GameApp {
