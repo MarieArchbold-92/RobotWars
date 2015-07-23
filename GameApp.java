@@ -6,7 +6,8 @@ package com.mubasher.ocja.game;
 import java.util.Scanner;
 
 /**
- * @author Mubasher Mohammede
+ * Simple Program Humans and robot playing game hwo ever has more power will win the Game
+ * @author Thomas Mcsherry,Mubasher Mohammede
  *
  */
 public class GameApp {
