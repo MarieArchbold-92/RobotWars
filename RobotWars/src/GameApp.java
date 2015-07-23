@@ -26,6 +26,7 @@ public class GameApp {
 		
 		Random rand = new Random();
 		
+		
 		//creating robots
 		for(int i = 0; i < robots.length; ++i){
 			if(i % 2 == 0){
@@ -34,6 +35,7 @@ public class GameApp {
 				robots[i] = new Robot("Type B", "R" + (i + 1), rand.nextInt(101));
 			}
 		}
+		
 		
 		//creating humans
 		for(int i = 0; i < humans.length; ++i){
@@ -50,8 +52,37 @@ public class GameApp {
 //			System.out.println(r.toString());
 //		}
 		
+		//NEW BATTLE
+		boolean inBattle = true;
+		int r = 0;
+		int h = 0;
+		while(inBattle){
+			robots[r].setLife(robots[r].getLife() - humans[h].getPower());
+			humans[h].setLife(humans[h].getLife() - robots[r].getPower());
 		
-		//BATTLE!!
+			if(robots[r].getLife() < 0){
+				++r;
+			}
+			if(humans[h].getLife() < 0){
+				++h;
+			}
+			
+			if(r >= robots.length || h >= humans.length){
+				inBattle = false;
+			}
+		}
+		
+		int humansLeft = 500 - (h + 1);
+		int robotsLeft = 500 - (r + 1);
+		//print who won
+		if(humansLeft > robotsLeft){
+			System.out.println("Humans win!!");
+		}else{
+			System.out.println("Robots win!!");
+		}
+		
+		/*
+		//OLD BATTLE
 		for(int b = 0; b < humans.length; ++b){
 			char sign = ' ';
 			if(humans[b].getPower() > robots[b].getPower()){
@@ -67,6 +98,8 @@ public class GameApp {
 			System.out.println(humans[b].toString() + " " + sign + " " + robots[b].toString());
 		}
 		
+		//print results
+		
 		System.out.println("Humans won " + humanWins + " times");
 		System.out.println("Robots won " + robotWins + " times");
 		System.out.println("Humans and Robots drew " + draws + " times");
@@ -75,6 +108,7 @@ public class GameApp {
 		System.out.println("Total robot power was " + Robot.totalPower);
 		
 		System.out.println("The winners by total power are " + (Human.totalPower > Robot.totalPower ? "humans" : "robots")  );
+	*/
 	}
 	
 	

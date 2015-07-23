@@ -13,6 +13,7 @@
 public class Lifeform {
 	protected String ID;
 	protected int power;
+	protected int life = 100;
 
 	public Lifeform(String ID, int power) {
 		this.ID = ID;
@@ -29,5 +30,13 @@ public class Lifeform {
 	
 	public String toString(){
 		return this.getID() + "'s power is " + this.getPower();
+	}
+	
+	public int getLife(){
+		return this.life;
+	}
+	
+	public void setLife(int life){
+		this.life = life;
 	}
 }
