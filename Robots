@@ -15,7 +15,7 @@ public class Robots {
 	String [] model = {"TypeA", "TypeB"};
 	
 	int uniqueID = 0101010;
-	int power;	
+	double power;	
 	String modelName;
 		
 	Random rand = new Random();
@@ -37,8 +37,17 @@ public class Robots {
 		return uniqueID;
 	}
 
-	public int getPower() {
+	public double getPower() {
 		return power;
+	}
+	
+	public void setHalfPower(){
+		
+		if(this.power != 0){
+			this.power = power - 0.5;
+		}else{
+			this.power = 1;
+		}
 	}
 
 	public String getModelName() {
