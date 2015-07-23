@@ -13,6 +13,10 @@
 public class Lifeform {
 	protected String ID;
 	protected int power;
+	public void setPower(int power) {
+		this.power = power;
+	}
+
 	protected int life = 100;
 
 	public Lifeform(String ID, int power) {
