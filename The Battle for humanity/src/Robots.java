@@ -9,7 +9,7 @@
 import java.util.Random;
 
 public class Robots {
-	String[]modelName = new String[]{"TYPE_A", "TYPE_B"};
+	String[]modelName = new String[]{"Droid", "Walker"};
 	String robotType;
 	static Random powerValue = new Random();
 	int RandValue = powerValue.nextInt(100);
