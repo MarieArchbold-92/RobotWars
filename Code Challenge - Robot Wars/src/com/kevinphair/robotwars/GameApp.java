@@ -1,5 +1,6 @@
 package com.kevinphair.robotwars;
 
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -72,6 +73,10 @@ public class GameApp {
 		Scanner scan = new Scanner(System.in);
 		int choice = 0;
 		
+		System.out.println("");
+		System.out.println("~~~~~~~~~~~");
+		System.out.println("ROBOT WARS!");
+		System.out.println("~~~~~~~~~~~");
 		System.out.println("Enter the number of the game type you wish to see and press ENTER");
 		System.out.println("");
 		System.out.println("1: Single battle between Robot and Human armies");
@@ -103,7 +108,7 @@ public class GameApp {
 		for (Contestant c : humanArmy) {
 			c.setName(makeHumanName());
 		}
-		int result = doBattle(robotArmy, humanArmy);
+		int result = doBattle(robotArmy, humanArmy, true);
 
 		if(result < 0){
 			System.out.print("The human army won this battle with ");
@@ -138,7 +143,10 @@ public class GameApp {
 
 			sb = new ScoreBoard(2);
 
-			int result = doBattle(robotArmy, humanArmy);
+			// Sort the armies by active status
+			Arrays.sort(robotArmy);
+			Arrays.sort(humanArmy);
+			int result = doBattle(robotArmy, humanArmy, false);
 			// vs1 loses (vs2 wins)
 			if (result < 0) {
 				overallSb.addWin(1);
@@ -149,26 +157,30 @@ public class GameApp {
 				overallSb.addLoss(1);
 			// vs1 draws (vs2 draws)
 			} else {
-				overallSb.addDraw(0);
+				overallSb.addDraw(1);
 				overallSb.addDraw(1);
 			}
-			System.out.println(overallSb.getWins(0) + " - " + overallSb.getWins(1));
+			System.out.println("Battle result : " + sb.getWins(0) + " - " + sb.getWins(1) + ". Robot power remaining:" + getRemainingPower(robotArmy) + " Human power remaining:" + getRemainingPower(humanArmy));
 			if (getRemainingPower(robotArmy) == 0 || getRemainingPower(humanArmy) == 0) break;
 		}
 		
-		if(overallSb.getWins(0) < overallSb.getDraws(1)){
+		if(overallSb.getWins(0) < overallSb.getWins(1)){
 			System.out.print("The human army won the war with ");
 			System.out.println(overallSb.getWins(1) + " battles won, " + overallSb.getLosses(1) + " battles lost and " + overallSb.getDraws(1) + " battles drawn (" + getTotalPower(humanArmy) + " total power)");
 			System.out.println("Robots lost with " + overallSb.getWins(0) + " battles won, " + overallSb.getLosses(0) + " battles lost and " + overallSb.getDraws(0) + " battles drawn (" + getTotalPower(robotArmy) + " total power)");
 			
-		}else if(overallSb.getWins(0) > overallSb.getDraws(1)){
+		}else if(overallSb.getWins(0) > overallSb.getWins(1)){
 			System.out.print("The robot army won the war with ");
 			System.out.println(overallSb.getWins(0) + " battles won, " + overallSb.getLosses(0) + " battles lost and " + overallSb.getDraws(0) + " battles drawn (" + getTotalPower(robotArmy) + " total power)");
 			System.out.println("Humans lost with " + overallSb.getWins(1) + " battles won, " + overallSb.getLosses(1) + " battles lost and " + overallSb.getDraws(1) + " battles drawn (" + getTotalPower(humanArmy) + " total power)");
 			
 		}else{
 			System.out.println("Both armies have declared a truce in this war");
+			System.out.println("Humans have " + overallSb.getWins(1) + " battles won, " + overallSb.getLosses(1) + " battles lost and " + overallSb.getDraws(1) + " battles drawn (" + getTotalPower(humanArmy) + " total power)");
+			System.out.println("Robots have " + overallSb.getWins(0) + " battles won, " + overallSb.getLosses(0) + " battles lost and " + overallSb.getDraws(0) + " battles drawn (" + getTotalPower(robotArmy) + " total power)");
 		}
+		
+		System.out.println("There are " + getNumActive(robotArmy) + " robots left and " + getNumActive(humanArmy) + " humans surviving.");
 		
 	}
 	
@@ -190,24 +202,25 @@ public class GameApp {
 	 * @param vs2
 	 * @return
 	 */
-	public int doBattle(Contestant[] vs1, Contestant[] vs2) {
+	public int doBattle(Contestant[] vs1, Contestant[] vs2, boolean report) {
 		for (int i = 0; i < vs1.length; ++i) {
-			int result = fight(vs1[i], vs2[i]);
-			// vs1 loses (vs2 wins)
-			if (result < 0) {
-				sb.addWin(1);
-				sb.addLoss(0);
-				
-			// vs1 wins (vs2 loses)
-			} else if (result > 0) {
-				sb.addWin(0);
-				sb.addLoss(1);
-				
-			// vs1 draws (vs2 draws)
-			} else {
-				sb.addDraw(0);
-				sb.addDraw(1);
-				
+			if (vs1[i].getActive() > 0 && vs2[i].getActive() > 0) {
+				int result = fight(vs1[i], vs2[i], report);
+				// vs1 loses (vs2 wins)
+				if (result < 0) {
+					sb.addWin(1);
+					sb.addLoss(0);
+					
+				// vs1 wins (vs2 loses)
+				} else if (result > 0) {
+					sb.addWin(0);
+					sb.addLoss(1);
+					
+				// vs1 draws (vs2 draws)
+				} else {
+					sb.addDraw(1);
+					sb.addDraw(1);
+				}
 			}
 //			System.out.println(sb.getWins(0) + " - " + sb.getWins(1));
 		}
@@ -221,7 +234,7 @@ public class GameApp {
 	
 	}
 	
-	public int fight(Contestant vs1, Contestant vs2) {
+	public int fight(Contestant vs1, Contestant vs2, boolean report) {
 		
 		int vs1Power = vs1.getPower();
 		int vs2Power = vs2.getPower();
@@ -233,21 +246,17 @@ public class GameApp {
 		vs2.setPower((vs2Power * 90) / 100);
 		
 		if(vs1Power > vs2Power){
-			System.out.println(vs1Name + " (" + vs1Power + ") > " + vs2Name + " (" + vs2Power + ") ");
+			if (report) System.out.println(vs1Name + " (" + vs1Power + ") > " + vs2Name + " (" + vs2Power + ") ");
 			vs2.makeInactive();
 			return 1;			
 		}else if (vs2Power > vs1Power){
-			System.out.println(vs1Name + " (" + vs1Power + ") < " + vs2Name + " (" + vs2Power + ") ");
+			if (report) System.out.println(vs1Name + " (" + vs1Power + ") < " + vs2Name + " (" + vs2Power + ") ");
 			vs1.makeInactive();
 			return -1;
 		}else{
-			System.out.println(vs1Name + " (" + vs1Power + ") = " + vs2Name + " (" + vs2Power + ") ");
+			if (report) System.out.println(vs1Name + " (" + vs1Power + ") = " + vs2Name + " (" + vs2Power + ") ");
 			return 0;
 		}
-	
-		
-		
-		
 	}
 
 	public String makeRobotName() {
@@ -291,9 +300,17 @@ public class GameApp {
 	public int getRemainingPower(Contestant[] army) {
 		int remainingPower = 0;
 		for (Contestant c : army) {
-			if (c.isActive()) remainingPower += c.getPower();
+			if (c.getActive() > 0) remainingPower += c.getPower();
 		}
 		return remainingPower;
 	}
 
+	public int getNumActive(Contestant[] army) {
+		int remaining = 0;
+		for (Contestant c : army) {
+			if (c.getActive() > 0) remaining++;
+		}
+		return remaining;
+	}
+	
 }
