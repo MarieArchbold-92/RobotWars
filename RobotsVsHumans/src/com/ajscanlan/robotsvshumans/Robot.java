@@ -4,6 +4,7 @@ public class Robot extends Lifeform {
 	private String model;
 	static int gamesWon, gamesLost, gamesDrew;
 	static final int DRAW = 0, LOSS = 1, WIN = 2;
+	private static String[] modelType = {"Type A", "Type B"};
 	
 	public Robot(String model, int power, int uuid){
 		super(power, uuid);
@@ -12,6 +13,10 @@ public class Robot extends Lifeform {
 
 	public String getModel() {
 		return model;
+	}
+	
+	public static String[] getModelType() {
+		return modelType;
 	}
 	
 	public static int getGamesWon() {
@@ -45,5 +50,6 @@ public class Robot extends Lifeform {
 	public String toString(){
 		return "Name: " + this.getModel() + ", Power: " + this.getPower();
 	}
+
 }
 
