@@ -1,14 +1,23 @@
 package com.ajscanlan.robotsvshumans;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 public class GameApp {
 
 	ArrayList<Lifeform> robots = new ArrayList<Lifeform>();
 	ArrayList<Lifeform> humans = new ArrayList<Lifeform>();
+	ArrayList<String> names = new ArrayList<String>();
+	
 	final int LIMIT = 1000;
 	private int totalHumanPower, totalRobotPower;
+	
+	//File file = new File("\names.txt");
+	
+	//List<String> lines = Files.readAllLines("names.txt", encoding);
 	
 	public static void main(String[] args) {
 		GameApp gl = new GameApp();
@@ -44,10 +53,24 @@ public class GameApp {
 	private void populateLists() {
 		Random randy = new Random();
 		
+		try {
+			Scanner s = new Scanner(new File("names.txt"));
+			while (s.hasNext()){
+			    names.add(s.next());
+			}
+			s.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		for(int i = 0; i < LIMIT/2; ++i){
-			humans.add(new Human("Alex", randy.nextInt(101), i));
+			humans.add(new Human(names.get(randy.nextInt(names.size())), randy.nextInt(101), i));
 			robots.add(new Robot("Typw A", randy.nextInt(101), i + 500));
 		}
+		
+		
+		
 	}
 
 	private void runProgram() {
@@ -56,7 +79,7 @@ public class GameApp {
 			int roboPower = robots.get(i).getPower();
 			int humanPower = humans.get(i).getPower();
 			
-			System.out.println(humans.get(i) + "(" + humanPower + ") vs " + robots.get(i) + "(" + roboPower + ")");
+			System.out.println(humans.get(i) +" vs " + robots.get(i) + "\n");
 			
 			totalHumanPower += humanPower;
 			totalRobotPower += roboPower;
