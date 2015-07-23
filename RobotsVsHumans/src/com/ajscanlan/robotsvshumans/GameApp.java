@@ -10,12 +10,13 @@ public class GameApp {
 
 	ArrayList<Lifeform> robots = new ArrayList<Lifeform>();
 	ArrayList<Lifeform> humans = new ArrayList<Lifeform>();
-	ArrayList<String> names = new ArrayList<String>();
+	ArrayList<String> firstNames = new ArrayList<String>();
+	ArrayList<String> lastNames = new ArrayList<String>();
 	ArrayList<String> roboNames = new ArrayList<String>();
-	
+
 	final int LIMIT = 1000;
 	private int totalHumanPower, totalRobotPower;
-	
+
 	public static void main(String[] args) {
 		GameApp gl = new GameApp();
 		gl.populateLists();
@@ -28,7 +29,7 @@ public class GameApp {
 		System.out.println("Games won: " + Human.getGamesWon());
 		System.out.println("Games lost: " + Human.getGamesLost());
 		System.out.println("Games drew: " + Human.getGamesDrew() + "\n\n");
-		
+
 		System.out.println("Robots\n-----------");
 		System.out.println("Games won: " + Robot.getGamesWon());
 		System.out.println("Games lost: " + Robot.getGamesLost());
@@ -41,7 +42,7 @@ public class GameApp {
 		} else {
 			System.out.println("ROBOTS WIN, ALL HAIL OUR ROBOT OVERLORDS");
 		}
-		
+
 		System.out.println("Total Human power: " + totalHumanPower);
 		System.out.println("Total Robot power: " + totalRobotPower);
 
@@ -49,44 +50,61 @@ public class GameApp {
 
 	private void populateLists() {
 		Random randy = new Random();
-		
+
 		try {
-			Scanner h = new Scanner(new File("names.txt"));
+			Scanner hL = new Scanner(new File("lastNames.txt"));
+			Scanner hF = new Scanner(new File("firstNames.txt"));
 			Scanner r = new Scanner(new File("robots.txt"));
-			
-			while (h.hasNext()){
-			    names.add(h.next());
+
+			while (hL.hasNext()){
+				lastNames.add(hL.next());
 			}
-			
+
+			while (hF.hasNext()){
+				firstNames.add(hF.next());
+			}
+
 			while(r.hasNext()){
 				roboNames.add(r.next());
 			}
+			
 			r.close();
-			h.close();
+			hL.close();
+			hF.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 		for(int i = 0; i < LIMIT/2; ++i){
-			humans.add(new Human(names.get(randy.nextInt(names.size())), randy.nextInt(101), i));
+			String firstName = firstNames.get(randy.nextInt(firstNames.size()));
+			String temp = firstName.substring(1, firstName.length()).toLowerCase();
+			firstName = firstName.charAt(0) + temp;
+			
+			String lastName = lastNames.get(randy.nextInt(lastNames.size()));
+			temp = lastName.substring(1, lastName.length()).toLowerCase();
+			lastName = lastName.charAt(0) + temp;
+			
+			String name = firstName + " " + lastName;
+			
+			humans.add(new Human(name, randy.nextInt(101), i));
 			robots.add(new Robot(roboNames.get(randy.nextInt(roboNames.size())) + " " + Robot.getModelType(), randy.nextInt(101), i + 500));
 		}
-		
-		
-		
+
+
+
 	}
 
 	private void runProgram() {
-		
+
 		for(int i = 0; i < LIMIT/2; ++i){
 			int roboPower = robots.get(i).getPower();
 			int humanPower = humans.get(i).getPower();
-			
+
 			System.out.println(humans.get(i) +" vs " + robots.get(i) + "\n");
-			
+
 			totalHumanPower += humanPower;
 			totalRobotPower += roboPower;
-			
+
 			if(humanPower == roboPower){
 				Human.incGames(Human.DRAW);
 				Robot.incGames(Robot.DRAW);
@@ -98,7 +116,7 @@ public class GameApp {
 				Robot.incGames(Robot.WIN);
 			}
 		}
-		
+
 	}
 
 }

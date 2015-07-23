@@ -14,8 +14,13 @@ public class Lifeform {
 		return power;
 	}
 
+	public void setPower(int power) {
+		this.power = power;
+	}
+
 	public int getUuid() {
 		return uuid;
 	}
+
 	
 }
