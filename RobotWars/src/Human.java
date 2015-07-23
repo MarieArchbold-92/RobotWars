@@ -43,6 +43,6 @@ public class Human extends Lifeform {
 	}
 	
 	public String toWeaponString(){
-		return this.getID() + " with " + this.hw.getName(); 
+		return this.getID() + "(" + this.getLife()+ " life) with " + this.hw.getName(); 
 	}
 }

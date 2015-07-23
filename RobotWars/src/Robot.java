@@ -48,6 +48,6 @@ public class Robot extends Lifeform{
 	}
 	
 	public String toWeaponString(){
-		return this.getID() + " with " + this.rw.getName(); 
+		return this.getID() + "(" + this.getLife() + " life) with " + this.rw.getName(); 
 	}
 }

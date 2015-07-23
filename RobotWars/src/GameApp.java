@@ -122,9 +122,13 @@ public class GameApp {
 				robots[r].setLife(robots[r].getLife() - (humans[h].getDefense() - robots[r].getWeaponPower()));
 				System.out.println(robots[r].toWeaponString() + " is hit by recoil from " + humans[h].toWeaponString());
 			}
-			System.out.println(robots[r].getID() + " has " + robots[r].getLife() + " life VS "
-						+ humans[h].getID() + " has " + humans[h].getLife() + " life");
-
+			System.out.println(robots[r].getID() + "(" + robots[r].getLife() + " life) VS "
+						+ humans[h].getID() + "(" + humans[h].getLife() + " life)");
+			/*
+			 //testing printf
+			System.out.printf("%s + (%d life) + VS %s + ( %dlife)", robots[r].getID(), robots[r].getLife()
+					, humans[h].getID(), humans[h].getLife());
+			 */
 			if(robots[r].getLife() <= 0){
 				++r;
 			}
