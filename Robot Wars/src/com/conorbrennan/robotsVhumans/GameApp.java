@@ -15,7 +15,7 @@ public class GameApp {
 		int humanLosses = 0;
 		int draws = 0;
 		int robotWins = 0;
-		int robotLosses = 10;
+		int robotLosses = 1000;
 		String robotType ;
 		
 
