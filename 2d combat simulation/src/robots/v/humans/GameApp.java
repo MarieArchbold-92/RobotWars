@@ -1,38 +1,47 @@
 package robots.v.humans;
 
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class GameApp {
+
+	int robotWinCount = 0;
+	int humanWinCount = 0;
+	int totalHumanPower = 0;
+	int totalRobotPower = 0;
+	int totalDraws = 0;
+
+	ArrayList robotArray = new ArrayList();
+	ArrayList humanArray = new ArrayList();
 
 	public static void main(String[] args) {	
 		GameApp newGame = new GameApp();
 		newGame.runProgram();
-		
+
 	}
 	public void runProgram(){
-		int robotWinCount = 0;
-		int humanWinCount = 0;
-		int totalHumanPower = 0;
-		int totalRobotPower = 0;
-		int totalDraws = 0;
+		Scanner scan = new Scanner(System.in);
 
+		combatantInit();		
 
-		Robot[] robotArray = new Robot[1000];
-		Human[] humanArray = new Human[1000];
-
-		for(int i = 0; i < 1000; ++i){
-			robotArray[i] = new Robot();
-			humanArray[i] = new Human();
+		System.out.println("======== Welcome to Robo Wars Combat Simulation 2015 ========" +
+				"\n" + "--------------------------------------------------------------" +
+				"\n" + "Please pick your game mode:" +
+				"\n" + "1.Skrimish" +
+				"\n" + "2.Last team standing" + "\n");
+		
+		int gameChoice = scan.nextInt();
+		
+		switch(gameChoice){
+		case 1: skrimish(); break;
+		case 2: 
 		}
 
+	}
+
+	public void skrimish(){
 		for(int i = 0; i < 1000; ++i){
-			if(humanArray[i].getPowerLevel() > robotArray[i].getPowerLevel()){
-				humanWinCount++;
-				totalHumanPower = totalHumanPower + humanArray[i].getPowerLevel();
-			}else if(humanArray[i].getPowerLevel() == robotArray[i].getPowerLevel()){
-				totalDraws++;
-			}else{
-				robotWinCount++;
-				totalRobotPower = totalRobotPower + robotArray[i].getPowerLevel();
-			}
+			fightMethod(i, i);
 
 			System.out.println("Round" + (i + 1));
 			System.out.println(humanArray[i].getName() + " has a power of " + humanArray[i].getPowerLevel());
@@ -50,6 +59,23 @@ public class GameApp {
 					+ "\n Total Human wins: " + humanWinCount
 					+ "\n Total Robot wins: " + robotWinCount
 					+ "\n Total draws: " + totalDraws);
+		}
+	}
+	public void combatantInit(){
+		for(int i = 0; i < 1000; ++i){
+			robotArray.add(new Robot());
+			humanArray.add(new Human());
+		}
+	}
+	public void fightMethod(int humanFighter, int robotFighter){
+		if(humanArray(humanFighter).getPowerLevel() > robotArray[robotFighter].getPowerLevel()){
+			humanWinCount++;
+			totalHumanPower = totalHumanPower + humanArray[humanFighter].getPowerLevel();
+		}else if(humanArray[humanFighter].getPowerLevel() == robotArray[robotFighter].getPowerLevel()){
+			totalDraws++;
+		}else{
+			robotWinCount++;
+			totalRobotPower = totalRobotPower + robotArray[robotFighter].getPowerLevel();
 		}
 	}
 }
