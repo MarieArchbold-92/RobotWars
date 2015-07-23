@@ -8,20 +8,67 @@ import java.util.Scanner;
 
 public class GameApp {
 
-	ArrayList<Lifeform> robots = new ArrayList<Lifeform>();
-	ArrayList<Lifeform> humans = new ArrayList<Lifeform>();
+	ArrayList<Robot> robots = new ArrayList<Robot>();
+	ArrayList<Human> humans = new ArrayList<Human>();
 	ArrayList<String> firstNames = new ArrayList<String>();
 	ArrayList<String> lastNames = new ArrayList<String>();
 	ArrayList<String> roboNames = new ArrayList<String>();
 
 	final int LIMIT = 1000;
+	final float DECAY = 0.05F;
 	private int totalHumanPower, totalRobotPower;
 
 	public static void main(String[] args) {
 		GameApp gl = new GameApp();
+		int choice = gl.displayMenu();
 		gl.populateLists();
-		gl.runProgram();
-		gl.displayResults();
+
+		switch(choice){
+		case 1:
+			gl.runProgram();
+			gl.displayResults();
+			break;
+
+		case 2:
+			gl.battleRoyale();
+		}
+
+	}
+
+	private void battleRoyale() {
+
+		while(humans.size() > 0 && robots.size() > 0){
+
+			System.out.println(robots.get(0) + " vs " + humans.get(0));
+
+			if(humans.get(0).getPower() > robots.get(0).getPower()){
+				robots.remove(0);
+				humans.get(0).setPower(humans.get(0).getPower() - (humans.get(0).getPower() * DECAY));
+				System.out.println("HUMAN WINNER");
+			} else if(humans.get(0).getPower() == robots.get(0).getPower()){
+				robots.remove(0);
+				humans.remove(0);
+				System.out.println("DRAW");
+			} else if(humans.get(0).getPower() < robots.get(0).getPower()) {
+				humans.remove(0);
+				robots.get(0).setPower(robots.get(0).getPower() - (robots.get(0).getPower() * DECAY));
+				System.out.println("ROBOT WINNER");
+			}
+		}
+
+		System.out.println("Humans: " + humans.size());
+		System.out.println("Robots: " + robots.size());
+
+	}
+
+	private int displayMenu() {
+		System.out.println("1) 1 versus 1");
+		System.out.println("2) Battle Royale");
+		//System.out.println("Literally anything else) Quit");
+
+		@SuppressWarnings("resource")
+		Scanner scan = new Scanner(System.in);
+		return scan.nextInt();
 	}
 
 	private void displayResults() {
@@ -67,7 +114,7 @@ public class GameApp {
 			while(r.hasNext()){
 				roboNames.add(r.next());
 			}
-			
+
 			r.close();
 			hL.close();
 			hF.close();
@@ -79,13 +126,13 @@ public class GameApp {
 			String firstName = firstNames.get(randy.nextInt(firstNames.size()));
 			String temp = firstName.substring(1, firstName.length()).toLowerCase();
 			firstName = firstName.charAt(0) + temp;
-			
+
 			String lastName = lastNames.get(randy.nextInt(lastNames.size()));
 			temp = lastName.substring(1, lastName.length()).toLowerCase();
 			lastName = lastName.charAt(0) + temp;
-			
+
 			String name = firstName + " " + lastName;
-			
+
 			humans.add(new Human(name, randy.nextInt(101), i));
 			robots.add(new Robot(roboNames.get(randy.nextInt(roboNames.size())) + " " + Robot.getModelType(), randy.nextInt(101), i + 500));
 		}
@@ -97,8 +144,8 @@ public class GameApp {
 	private void runProgram() {
 
 		for(int i = 0; i < LIMIT/2; ++i){
-			int roboPower = robots.get(i).getPower();
-			int humanPower = humans.get(i).getPower();
+			float roboPower = robots.get(i).getPower();
+			float humanPower = humans.get(i).getPower();
 
 			System.out.println(humans.get(i) +" vs " + robots.get(i) + "\n");
 
