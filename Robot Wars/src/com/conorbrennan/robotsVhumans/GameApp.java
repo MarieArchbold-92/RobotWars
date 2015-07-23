@@ -81,7 +81,7 @@ public class GameApp {
 		int humanCount = 0;
 		int robotCount = 0;
 		for(int i =0  ;humanWin<robotArmy.length&&robotWin<robotArmy.length;i++ ){
-			System.out.println(humanArmy[humanCount].power+" "+robotArmy[robotCount].power+" "+humanCount);
+//			System.out.println(humanArmy[humanCount].power+" "+robotArmy[robotCount].power+" "+humanCount);
 			if(humanArmy[humanCount].power>robotArmy[robotCount].power){
 				champion = humanArmy[humanCount];
 				humanArmy[humanCount].power = (humanArmy[humanCount].power * 90)/100 ; 
