@@ -1,0 +1,87 @@
+/**
+ * 
+ */
+package RobotWarsGregoryHarman;
+
+/**
+ * @author Gregory Harman
+ *
+ */
+public class RobotWarsApp {
+
+
+	public static void main(String[] args) {
+
+		RobotWarsApp robotWars = new RobotWarsApp();
+
+		robotWars.runProgram();
+
+	}
+
+	public void runProgram() {
+
+		int maxFightCount = 500;
+		int totalPowerHumans = 0;
+		int totalPowerRobots = 0;
+
+		int humanWins = 0;
+		int robotWins = 0;
+		int draws = 0;
+
+		for(int i = 0; i < maxFightCount; ++i){
+
+
+			Humans human = new Humans(i);
+			Robots robot = new Robots(i);
+
+			int humanPower = human.getPower();
+			int robotPower = robot.getPower();
+
+			totalPowerHumans += humanPower;
+			totalPowerRobots += robotPower;
+			
+			System.out.println("Fighting for the humans we have " + human.getName() + ". Dog Tag Number: " + human.getUniqueID() 
+											+ ". Their Strength is " + human.getPower() + ".");
+			
+			System.out.println("In this corner fighting for the robots we have a " + robot.getModelName() + " Killbot. Serial Number: " 
+											+ robot.getUniqueID() + ". Its Strength is " + robot.getPower() + ".");
+			
+
+			if(humanPower > robotPower){
+				++humanWins; 
+				System.out.println("The human " + human.getName() + " wins!!!.\n");
+			}else if(robotPower > humanPower){
+				++robotWins;
+				System.out.println("Killbot " + robot.getModelName() + " wins!!!.\n");
+			}else{
+				++draws;
+				System.out.println("The combatants have killed each other and drawn.");
+			}
+
+		}
+		
+		System.out.println("The war has ended.");
+		System.out.println("The humans had a total power of " + totalPowerHumans + " and won " + humanWins + " fights, and had " 
+																+ draws + " draws." );
+		
+		System.out.println("The robots had a total power of " + totalPowerRobots + " and won " + robotWins + " fights, and had " 
+				+ draws + " draws." );
+		
+		if(totalPowerHumans > totalPowerRobots){
+			
+			System.out.println("The humans have won the war and defeated the robot menace! (unless the robots figure out time travel)");
+			
+		}else if(totalPowerRobots > totalPowerHumans){
+			
+			System.out.println("The robots have won the war, the humans are dead, they killed their ass's with poisonious gases.");
+			
+		}else{
+			System.out.println("The war is a draw, both forces have destroyed each other.");
+		}
+
+
+	}
+
+
+
+}
