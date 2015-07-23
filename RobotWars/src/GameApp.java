@@ -16,11 +16,6 @@ public class GameApp {
 	private Random rand = new Random();
 
 	public static void main(String[] args) {
-		//		Robot r = new Robot("A", "Type B", 10);
-		//		System.out.println(r.getPower() + " " + r.getID());
-
-		//Human h = new Human(100, 50);
-		//System.out.println(h.getPower() + h.getID());
 
 		GameApp ga = new GameApp();
 		ga.runProgram();
@@ -30,24 +25,12 @@ public class GameApp {
 	private void runProgram(){
 
 
-
-		//creating robots
-		for(int i = 0; i < robots.length; ++i){
-			if(i % 2 == 0){
-				robots[i] = new Robot("Type A", "R" + (i + 1), rand.nextInt(101));
-			}else{
-				robots[i] = new Robot("Type B", "R" + (i + 1), rand.nextInt(101));
-			}
-		}
-
-
-		//creating humans
-		for(int i = 0; i < humans.length; ++i){
-			humans[i] = new Human(createName(), rand.nextInt(101));
-		}
 		boolean fight = true;
 		do{
+			createLifeforms();
+			
 			System.out.println();
+			System.out.println("Creating new life for your sadistic pleasure..");
 			System.out.println("How do you want the lifeforms to do battle?");
 			System.out.println("1) Last Man Standing");
 			System.out.println("2) Through life");
@@ -81,23 +64,25 @@ public class GameApp {
 			}	
 		}while(fight);
 
-		//TEST PRINTOUT
-		//		for(Human h : humans){
-		//			System.out.println(h.toString());
-		//		}
-		//		
-		//		for(Robot r : robots){
-		//			System.out.println(r.toString());
-		//		}
-
-		/*
-
-		 */
-
-
-		//LAST MAN STANDING
-		//TODO
 	}
+
+	private void createLifeforms() {
+		//creating robots
+				for(int i = 0; i < robots.length; ++i){
+					if(i % 2 == 0){
+						robots[i] = new Robot("Type A", "R" + (i + 1), rand.nextInt(101));
+					}else{
+						robots[i] = new Robot("Type B", "R" + (i + 1), rand.nextInt(101));
+					}
+				}
+
+
+				//creating humans
+				for(int i = 0; i < humans.length; ++i){
+					humans[i] = new Human(createName(), rand.nextInt(101));
+				}		
+	}
+
 
 	private void lifeBattle(){
 		//LIFE BATTLE
@@ -207,14 +192,14 @@ public class GameApp {
 	private String getFightResult(Robot robot, Human human) {
 		//TODO
 		if(robot.getLife() <= 0 && human.getLife() <= 0){
-			return robot.toString() + " and " + human.toString() + " died";
+			return robot.toString() + " and " + human.toString() + ", both died";
 		} else if (robot.getLife() <= 0 && human.getLife() > 0){
-			return robot.toString() + " died and " + human.toString() + " lives";
+			return robot.toString() + " - died and " + human.toString() + " - lives";
 		} else if (robot.getLife() > 0 && human.getLife() <= 0){
-			return robot.toString() + " lives and " + human.toString() + " died";
+			return robot.toString() + " - lives and " + human.toString() + " - died";
 		} else {
 			//fight again
-			return robot.toString() + " and " + human.toString() + " round 2 !";
+			return robot.toString() + " and " + human.toString() + ", round 2!!";
 		}
 
 	}
