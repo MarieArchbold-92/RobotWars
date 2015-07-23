@@ -12,13 +12,13 @@ import java.util.Random;
 public class Humans {
 
 	int uniqueID = 285760;
-	int power;
+	double power;
 	String name;
 
 	String [] firstName = {"Margrett","Fausto","Loris","Isiah","Diane","Jacque","Shirl","Griselda","Nakia","Otilia","Darcie","Waltraud","Naida"
 			,"Anh","Dannie","Arthur","Danuta","Shanel","Son","Kymberly","Michel","Teddy","Sammie","Lillia","Jessia","Jewell","Denisha","Cherelle"
 			,"Verdie","Romaine"};
-			
+
 	String [] lastName = {"Hart","Gillespie","Boyd","Mccarthy","Montes","Dalton","Pineda","Curry","Galloway","Solomon","Velasquez","Cisneros"
 			,"Reilly","Mejia","Bass","Blackwell","Charles","Frye","Bruce","Maxwell","Russo","Ford","Carlson","Vazquez","Crawford","Daniel","Morse"
 			,"Snyder","Fields","Arias"};
@@ -39,8 +39,17 @@ public class Humans {
 
 
 
-	public int getPower() {
+	public double getPower() {
 		return power;
+	}
+
+	public void setHalfPower(){
+		
+		if(this.power != 0){
+			this.power = power -0.5;
+		}else{
+			this.power = 1;
+		}
 	}
 
 
