@@ -1,3 +1,10 @@
+/**
+ * Definition: Class that loads menu and plays different robot battling games
+ * 
+ * @author Artjoms Porss, Jenn Quinn
+ * Version No: 1.0
+ * 
+ */
 
 
 import java.util.Random;
@@ -122,8 +129,8 @@ public class GameApp {
 				robots[r].setLife(robots[r].getLife() - (humans[h].getDefense() - robots[r].getWeaponPower()));
 				System.out.println(robots[r].toWeaponString() + " is hit by recoil from " + humans[h].toWeaponString());
 			}
-			System.out.println(robots[r].getID() + "(" + robots[r].getLife() + " life) VS "
-						+ humans[h].getID() + "(" + humans[h].getLife() + " life)");
+			System.out.println(robots[r].getID() + "(" + (int)robots[r].getLife() + " life) VS "
+						+ humans[h].getID() + "(" + (int)humans[h].getLife() + " life)");
 			/*
 			 //testing printf
 			System.out.printf("%s + (%d life) + VS %s + ( %dlife)", robots[r].getID(), robots[r].getLife()

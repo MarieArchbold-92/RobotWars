@@ -1,3 +1,10 @@
+/**
+ * Definition: Template for human objects
+ * 
+ * @author Artjoms Porss, Jenn Quinn
+ * Version No: 1.0
+ * 
+ */
 
 
 public class Human extends Lifeform {
@@ -43,6 +50,6 @@ public class Human extends Lifeform {
 	}
 	
 	public String toWeaponString(){
-		return this.getID() + "(" + this.getLife()+ " life) with " + this.hw.getName(); 
+		return this.getID() + "(" + (int)this.getLife()+ " life) with " + this.hw.getName(); 
 	}
 }

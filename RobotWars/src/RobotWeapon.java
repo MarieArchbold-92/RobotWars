@@ -1,3 +1,11 @@
+/**
+ * Definition: contains templates of human weapon types and their power
+ * 
+ * @author Artjoms Porss, Jenn Quinn
+ * Version No: 1.0
+ * 
+ */
+
 
 public enum RobotWeapon {
 	CLAWS(15F),

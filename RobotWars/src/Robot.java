@@ -1,3 +1,10 @@
+/**
+ * Definition: Template for robot objects
+ * 
+ * @author Artjoms Porss, Jenn Quinn
+ * Version No: 1.0
+ * 
+ */
 
 
 public class Robot extends Lifeform{
@@ -48,6 +55,6 @@ public class Robot extends Lifeform{
 	}
 	
 	public String toWeaponString(){
-		return this.getID() + "(" + this.getLife() + " life) with " + this.rw.getName(); 
+		return this.getID() + "(" + (int)this.getLife() + " life) with " + this.rw.getName(); 
 	}
 }

@@ -1,15 +1,12 @@
 /**
- * Definition: 
+ * Definition: Is a parent class for Human and Robot class
  * 
- * @author Artjoms Porss
+ * @author Artjoms Porss, Jenn Quinn
  * Version No: 1.0
  * 
  */
 
 
-/**
- *
- */
 public class Lifeform {
 	
 	protected String ID;
