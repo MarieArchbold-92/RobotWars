@@ -5,33 +5,44 @@ package com.kevinphair.robotwars;
  * Created 23 Jul 2015
  *
  */
-public class Contestant {
+public class Contestant implements Comparable<Contestant> {
 
 	
 	private int power = 0;
 	private static int id = 0;
 	private int objectId = 0;
 	private String name = "";
-	private boolean active = false;
+	private int active = 0;
 	
 	public Contestant (int p, String s) {
 		this.power = p;
 		this.objectId = getId();
-		this.active = true;
+		this.active = 1;
 		this.name = makeName();
-		id++;
+		Contestant.id++;
+	}
+	
+	public int compareTo(Contestant c) {
+		int compareActive = c.getActive(); 
+ 
+		//ascending order
+		return this.active - compareActive;
+ 
+		//descending order
+		//return compareQuantity - this.quantity;
+ 
 	}
 	
 	/**
 	 * Gets the active status of the object
 	 * @return
 	 */
-	public boolean isActive() {
-		return active;
+	public int getActive() {
+		return this.active;
 	}
 
 	public void makeInactive() {
-		active = false;
+		this.active = 0;
 	}
 
 	/**
@@ -39,7 +50,7 @@ public class Contestant {
 	 * @return power as int
 	 */
 	public int getPower() {
-		return power;
+		return this.power;
 	}
 	/**
 	 * Set the current power level of object
@@ -58,7 +69,7 @@ public class Contestant {
 	}
 	
 	public String makeName() {
-		return  "" + id;	
+		return  "" + Contestant.id;	
 	}
 	
 	public String getName() {
