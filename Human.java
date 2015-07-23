@@ -1,4 +1,5 @@
 package com.mubasher.ocja.game;
+@author Thomas Mcsherry,Mubasher Mohammede
 
 import java.util.Random;
 
