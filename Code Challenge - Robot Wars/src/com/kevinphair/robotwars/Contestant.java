@@ -7,14 +7,19 @@ package com.kevinphair.robotwars;
  */
 public class Contestant {
 
-	int power = 0;
-	String id = "";
-	boolean active = false;
+	
+	private int power = 0;
+	private static int id = 0;
+	private int objectId = 0;
+	private String name = "";
+	private boolean active = false;
 	
 	public Contestant (int p, String s) {
 		this.power = p;
-		this.id = s;
+		this.objectId = getId();
 		this.active = true;
+		this.name = makeName();
+		id++;
 	}
 	
 	/**
@@ -23,6 +28,10 @@ public class Contestant {
 	 */
 	public boolean isActive() {
 		return active;
+	}
+
+	public void makeInactive() {
+		active = false;
 	}
 
 	/**
@@ -44,8 +53,23 @@ public class Contestant {
 	 * Get the id (name) of the object
 	 * @return id as string
 	 */
-	public String getId() {
-		return id;
+	public static int getId() {
+		return Contestant.id;
 	}
+	
+	public String makeName() {
+		return  "" + id;	
+	}
+	
+	public String getName() {
+		return this.name;
+		
+	}
+	
+	public void setName(String s) {
+		this.name = s;	
+	}
+	
+	
 	
 }
