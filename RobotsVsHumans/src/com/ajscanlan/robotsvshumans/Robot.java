@@ -1,10 +1,11 @@
 package com.ajscanlan.robotsvshumans;
 
+import java.util.Random;
+
 public class Robot extends Lifeform {
 	private String model;
 	static int gamesWon, gamesLost, gamesDrew;
 	static final int DRAW = 0, LOSS = 1, WIN = 2;
-	private static String[] modelType = {"Type A", "Type B"};
 	
 	public Robot(String model, int power, int uuid){
 		super(power, uuid);
@@ -15,8 +16,15 @@ public class Robot extends Lifeform {
 		return model;
 	}
 	
-	public static String[] getModelType() {
-		return modelType;
+	public static String getModelType() {
+		Random randy = new Random();
+		int rand = randy.nextInt(2);
+		
+		if(rand == 0){
+			return "Model A";
+		} else {
+			return "Model B";
+		}
 	}
 	
 	public static int getGamesWon() {

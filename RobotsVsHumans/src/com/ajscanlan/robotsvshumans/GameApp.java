@@ -11,13 +11,10 @@ public class GameApp {
 	ArrayList<Lifeform> robots = new ArrayList<Lifeform>();
 	ArrayList<Lifeform> humans = new ArrayList<Lifeform>();
 	ArrayList<String> names = new ArrayList<String>();
+	ArrayList<String> roboNames = new ArrayList<String>();
 	
 	final int LIMIT = 1000;
 	private int totalHumanPower, totalRobotPower;
-	
-	//File file = new File("\names.txt");
-	
-	//List<String> lines = Files.readAllLines("names.txt", encoding);
 	
 	public static void main(String[] args) {
 		GameApp gl = new GameApp();
@@ -54,19 +51,25 @@ public class GameApp {
 		Random randy = new Random();
 		
 		try {
-			Scanner s = new Scanner(new File("names.txt"));
-			while (s.hasNext()){
-			    names.add(s.next());
+			Scanner h = new Scanner(new File("names.txt"));
+			Scanner r = new Scanner(new File("robots.txt"));
+			
+			while (h.hasNext()){
+			    names.add(h.next());
 			}
-			s.close();
+			
+			while(r.hasNext()){
+				roboNames.add(r.next());
+			}
+			r.close();
+			h.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		for(int i = 0; i < LIMIT/2; ++i){
 			humans.add(new Human(names.get(randy.nextInt(names.size())), randy.nextInt(101), i));
-			robots.add(new Robot("Typw A", randy.nextInt(101), i + 500));
+			robots.add(new Robot(roboNames.get(randy.nextInt(roboNames.size())) + " " + Robot.getModelType(), randy.nextInt(101), i + 500));
 		}
 		
 		
