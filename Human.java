@@ -6,17 +6,12 @@ import java.util.Random;
 
 
 /**
+ * just to test if its updating on github
  * @author @author Thomas Mcsherry,Mubasher Mohammede
  *
  */
 /*
- * Scanner s = new Scanner(new File("filepath"));
-ArrayList<String> list = new ArrayList<String>();
-while (s.hasNext()){
-    list.add(s.next());
-}
-s.close();
- */
+
 public class Human {
 	private String name;
 	private double power;
