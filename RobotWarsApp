@@ -25,7 +25,7 @@ public class RobotWarsApp {
 
 	boolean humanWinner = false;
 	boolean robotWinner = false;
-	boolean quit = false;
+
 
 
 	public static void main(String[] args) {
@@ -33,13 +33,15 @@ public class RobotWarsApp {
 		RobotWarsApp robotWars = new RobotWarsApp();
 
 		robotWars.runProgram();
-
 	}
 
 	public void runProgram() {
 
+		boolean quit = false;
+
 		System.out.println("Welcome to Robot Wars.");
 
+		//menu loop
 		do{
 			System.out.println("\nPlease pick an option.");
 			System.out.println("1) Play One vs One.");
@@ -56,95 +58,73 @@ public class RobotWarsApp {
 
 			case "2":   gameModeLastStand(); break;
 
-			case "3": quit = true; 
-			System.out.println("Thank you for playing, Good bye.");
+			case "3": quit = true; 										//quit game
+			System.out.println("Thank you for playing, Good bye."); 
 			break;
 
-			default : System.out.println("Please enter a correct option (1-3): ");
+			default : System.out.println("Please enter a correct option (1-3): "); //if incorrect number inputed loop back
 
 			}
-
-
 
 		}while(!quit);
 
 	}
-
-
 
 	private void gameModeOneVSOne() {
 
 		Humans human = new Humans(0);
 		Robots robot = new Robots(0);
 
+		//loop till 500 humans have fought 500 robots
 		while(fightsCount < 500){
 
-
-			human = new Humans(uniqueIDNum);
+			//create a new human and robot
+			human = new Humans(uniqueIDNum);	
 			robot = new Robots(uniqueIDNum);
 
+			++uniqueIDNum; //increases the number to be used as a unique ID
+			++fightsCount; // counts how many fights there has been so far
 
-			++uniqueIDNum; //increases num to be used as a unique ID
-			++fightsCount; // counts how many fights there has been
-
-
-
-			double humanPower = human.getPower();
+			//gets the opponents power
+			double humanPower = human.getPower(); 
 			double robotPower = robot.getPower();
 
+			//adds power to total
 			totalPowerHumans += humanPower;
 			totalPowerRobots += robotPower;
 
-			System.out.println("Fighting for the humans we have " + human.getName() + ". Dog Tag Number: " + human.getUniqueID() 
-			+ ". Their Strength is " + human.getPower() + ".");
+			//prints out each fighters details
+			fightersDetails(human,robot);
 
-			System.out.println("In this corner fighting for the robots we have a " + robot.getModelName() + " Killbot. Serial Number: " 
-					+ robot.getUniqueID() + ". Its Strength is " + robot.getPower() + ".");
-
-
-			if(humanPower > robotPower){
-				++humanWins; 
-				++robotsKilled;
-				System.out.println("\nThe human " + human.getName() + " wins!!!.");
-				System.out.println("Robots killed so far: " + robotsKilled + ". Humans killed so far: " + humansKilled + ".\n");
-
-
-			}else if(robotPower > humanPower){
-				++robotWins;
-				++humansKilled;
-				System.out.println("\nKillbot " + robot.getModelName() + " wins!!!.");
-				System.out.println("Robots killed so far: " + robotsKilled + ". Humans killed so far: " + humansKilled + ".\n");
-
-
-			}else{
-				++draws;
-				++humansKilled;
-				++robotsKilled;
-				System.out.println("The combatants have killed each other and drawn.\n");
-			}
+			//finds the winner
+			getFightWinner(humanPower,robotPower,human,robot);
 
 		}
 
 		System.out.println("The war has ended.");
 		System.out.println("The results of this one vs one game: ");
-		getResults();
 
-	}
+		getBattleResults(); //print results of the battle
+
+		resetVariables(); //resets all variables
+
+	}	
 
 	private void gameModeLastStand() {
 
 		Humans human = new Humans(0);
 		Robots robot = new Robots(0);
 
+		//loop till 500 humans or 500 robots are all killed
 		while((humansKilled < 500 && robotsKilled < 500)){
 
-			if(humanWinner){ //if human was last winner half their power and make a new robot
-				human.setHalfPower();	
+			if(humanWinner){ //if human was the last winner reduce their power and make a new robot
+				human.setReducedPower();	
 				robot = new Robots(uniqueIDNum);
-			}else if(robotWinner){ //if robot was last winner half their power and make a new human
-				robot.setHalfPower();
+			}else if(robotWinner){ //if robot was the last winner reduce their power and make a new human
+				robot.setReducedPower();
 				human = new Humans(uniqueIDNum);
-			}else{
+			}else{								//if a draw make new human and robot
 				human = new Humans(uniqueIDNum);
 				robot = new Robots(uniqueIDNum);
 			}
@@ -157,51 +137,39 @@ public class RobotWarsApp {
 			double humanPower = human.getPower();
 			double robotPower = robot.getPower();
 
+			//gets the opponents power
 			totalPowerHumans += humanPower;
 			totalPowerRobots += robotPower;
 
-			System.out.println("Fighting for the humans we have " + human.getName() + ". Dog Tag Number: " + human.getUniqueID() 
-			+ ". Their Strength is " + human.getPower() + ".");
+			//prints out each fighters details
+			fightersDetails(human,robot);
 
-			System.out.println("In this corner fighting for the robots we have a " + robot.getModelName() + " Killbot. Serial Number: " 
-					+ robot.getUniqueID() + ". Its Strength is " + robot.getPower() + ".");
+			//finds the winner
+			getFightWinner(humanPower,robotPower,human,robot);
 
-
-			if(humanPower > robotPower){
-				++humanWins; 
-				humanWinner = true;
-				robotWinner = false;
-				++robotsKilled;
-				System.out.println("\nThe human " + human.getName() + " wins!!!.");
-				System.out.println("Robots killed so far: " + robotsKilled + ". Humans killed so far: " + humansKilled + ".\n");
-
-
-			}else if(robotPower > humanPower){
-				++robotWins;
-				robotWinner = true;
-				humanWinner = false;
-				++humansKilled;
-				System.out.println("\nKillbot " + robot.getModelName() + " wins!!!.");
-				System.out.println("Robots killed so far: " + robotsKilled + ". Humans killed so far: " + humansKilled + ".\n");
-
-
-			}else{
-				++draws;
-				robotWinner = false;
-				humanWinner = false;
-				++humansKilled;
-				++robotsKilled;
-				System.out.println("The combatants have killed each other and drawn.\n");
-			}
 
 		}
+
 		System.out.println("The war has ended.");
-		System.out.println("The results of this last stand game: ");		
-		getResults();
+		System.out.println("The results of this last stand game: ");	
+		
+		getBattleResults(); //print results of the battle
+		resetVariables(); //resets all variables
 
 	}
 
-	private void getResults() {
+	private void fightersDetails(Humans human, Robots robot) {
+		System.out.println("Fight number: " + fightsCount);
+
+		System.out.println("Fighting for the humans we have -\n" + human.getName() + ". Dog Tag Number: " + human.getUniqueID() 
+		+ ". Their Strength is " + human.getPower() + ".");
+
+		System.out.println("In this corner fighting for the robots we have -\nA " + robot.getModelName() + " Killbot. Serial Number: " 
+				+ robot.getUniqueID() + ". Its Strength is " + robot.getPower() + ".");
+
+	}
+
+	private void getBattleResults() {
 
 		System.out.println("They had a total of " + fightsCount + " fights.");
 
@@ -224,6 +192,11 @@ public class RobotWarsApp {
 			System.out.println("The war is a draw, both forces have destroyed each other.\n");
 		}
 
+
+
+	}
+
+	private void resetVariables(){
 		fightsCount = 0;
 		totalPowerHumans = 0;
 		totalPowerRobots = 0;
@@ -238,9 +211,36 @@ public class RobotWarsApp {
 
 		humanWinner = false;
 		robotWinner = false;
-
 	}
 
+	private void getFightWinner(double humanPower,double robotPower, Humans human, Robots robot ){
 
+		if(humanPower > robotPower){
+			++humanWins; 
+			humanWinner = true;
+			robotWinner = false;
+			++robotsKilled;
+			System.out.println("\nThe human " + human.getName() + " wins!!!.");
+			System.out.println("Robots killed so far: " + robotsKilled + ". Humans killed so far: " + humansKilled + ".\n");
+
+
+		}else if(robotPower > humanPower){
+			++robotWins;
+			robotWinner = true;
+			humanWinner = false;
+			++humansKilled;
+			System.out.println("\nKillbot " + robot.getModelName() + " wins!!!.");
+			System.out.println("Robots killed so far: " + robotsKilled + ". Humans killed so far: " + humansKilled + ".\n");
+
+
+		}else{
+			++draws;
+			robotWinner = false;
+			humanWinner = false;
+			++humansKilled;
+			++robotsKilled;
+			System.out.println("The combatants have killed each other and drawn.\n");
+		}
+	}
 
 }
