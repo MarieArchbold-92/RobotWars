@@ -1,0 +1,51 @@
+/**
+ * 
+ */
+package RobotWarsGregoryHarman;
+
+import java.util.Random;
+
+/**
+ * @author Gregory Harman
+ *
+ */
+public class Robots {
+	
+
+	String [] model = {"TypeA", "TypeB"};
+	
+	int uniqueID = 0101010;
+	int power;	
+	String modelName;
+		
+	Random rand = new Random();
+	
+	public Robots(int i){
+		
+		this.power = rand.nextInt(101);
+		this.uniqueID += i;
+		this.modelName = model[rand.nextInt(2)];
+			
+		
+	}
+
+	public String[] getModel() {
+		return model;
+	}
+
+	public int getUniqueID() {
+		return uniqueID;
+	}
+
+	public int getPower() {
+		return power;
+	}
+
+	public String getModelName() {
+		return modelName;
+	}
+
+		
+	
+	
+}
