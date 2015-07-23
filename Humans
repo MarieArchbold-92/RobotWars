@@ -1,0 +1,56 @@
+/**
+ * 
+ */
+package RobotWarsGregoryHarman;
+
+import java.util.Random;
+
+/**
+ * @author Gregory Harman
+ *
+ */
+public class Humans {
+
+	int uniqueID = 285760;
+	int power;
+	String name;
+
+	String [] firstName = {"Margrett","Fausto","Loris","Isiah","Diane","Jacque","Shirl","Griselda","Nakia","Otilia","Darcie","Waltraud","Naida"
+			,"Anh","Dannie","Arthur","Danuta","Shanel","Son","Kymberly","Michel","Teddy","Sammie","Lillia","Jessia","Jewell","Denisha","Cherelle"
+			,"Verdie","Romaine"};
+			
+	String [] lastName = {"Hart","Gillespie","Boyd","Mccarthy","Montes","Dalton","Pineda","Curry","Galloway","Solomon","Velasquez","Cisneros"
+			,"Reilly","Mejia","Bass","Blackwell","Charles","Frye","Bruce","Maxwell","Russo","Ford","Carlson","Vazquez","Crawford","Daniel","Morse"
+			,"Snyder","Fields","Arias"};
+
+	Random rand = new Random();
+
+	public Humans(int i){
+
+		this.power = rand.nextInt(101);
+		this.uniqueID += i;
+		this.name = firstName[rand.nextInt(30)] + " " + lastName[rand.nextInt(30)];
+
+	}
+
+	public int getUniqueID() {
+		return uniqueID;
+	}
+
+
+
+	public int getPower() {
+		return power;
+	}
+
+
+
+	public String getName() {
+		return name;
+	}
+
+
+
+
+
+}
